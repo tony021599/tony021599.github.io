@@ -159,7 +159,7 @@
                            <span id="ask_4" class="Fw(n) Fz(16px)--mobile Fz(14px) D(f) Ai(c) C($c-trend-up)"></span>
                          </div>
                          <div class="D(f) Ai(c) H(28px)" bis_skin_checked="1">
-                           <span id="ask_5" class="Fw(n) Fz(16px)--mobile Fz(14px) D(f) Ai(c) computed_by_yesterday C($c-trend-up)">47.75</span>
+                           <span id="ask_5" class="Fw(n) Fz(16px)--mobile Fz(14px) D(f) Ai(c) C($c-trend-up)">47.75</span>
                          </div>
                        </div>
                        <div class="Flxg(2)" bis_skin_checked="1">
@@ -215,7 +215,7 @@
 
     
     <script> 
-
+  var divClone
   $(document).on('keydown', function(e) {
         if (e.keyCode == 27)
         $("#stockDetail").hide();
@@ -226,13 +226,20 @@
       $("#stockDetail").hide();
       // $("#frame").remove();
   });
-
-
+  
   $("#stockDetail").click(function(e){
     e.stopPropagation();
   });
+  $(document).ready(
+    function(){
+      divClone = $('#stockDetail').html();
+      // console.log('done')
+      // #console.log(divClone)
+    }
+  )
 $('div').click(function (event)
-{  
+{ 
+  $("#stockDetail").html(divClone); 
   var $target = $(event.target); // the element that fired the original click event
   var regex = /^[0-9]{4}$/
   // console.log($target[0].title)
@@ -253,10 +260,10 @@ $('div').click(function (event)
   }
 }); 
 function getinfo(stock_id){
-  console.log('getinfo')
+  // console.log('getinfo')
         //$.getJSON('https://raw.githubusercontent.com/itony215/test_data/main/StockServices.json', function(data){
         $.getJSON('https://raw.githubusercontent.com/itony215/flat_viewer_data/main/info/info_'+stock_id+'.json', function(data){
-        console.log('4444',data)
+        //console.log('4444',data)
         $("#stock_name").text(data[0]["symbolName"]);
         $("#stock").text(data[0]["systexId"]);
         $("#sectorName").text(data[0]["sectorName"]);
@@ -317,9 +324,10 @@ function getinfo(stock_id){
       })
     }
     function changeColor(){
+      // document.querySelectorAll('span').replaceWith(divClone.clone());
         document.querySelectorAll('span').forEach(function(item) {
             var closer = document.getElementById('yesterday_closer').innerHTML
-            console.log(closer)
+            // console.log(closer)
             if(item.classList.contains('computed_by_yesterday')){
               if (item.innerHTML == document.getElementById('limitUpPrice').innerHTML){
                 $(item).addClass('C(#fff) Px(6px) Py(2px) Bdrs(4px) Bgc($c-trend-up)')
